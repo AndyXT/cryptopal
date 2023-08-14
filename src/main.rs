@@ -20,12 +20,12 @@ fn main() {
         // TODO Convert to Hex String after encoding!
         // convert to bytes and then xor the line and line_key bytes.
         let encoded_bytes: Vec<u8> = repeating_xor_encode(line, &line_key);
-        let encoded_hex_chars: Vec<Vec<char>> = encoded_bytes
-            .iter()
-            .map(|&a| vec![from_u8_to_hexstr(a).0, from_u8_to_hexstr(a).1])
-            .collect();
-        let encoded_hexstr =
-            String::from_iter::<Vec<char>>(encoded_hex_chars.into_iter().flatten().collect());
+        // let encoded_hex_chars: Vec<Vec<char>> = encoded_bytes
+        //     .iter()
+        //     .map(|&a| vec![from_u8_to_hexstr(a).0, from_u8_to_hexstr(a).1])
+        //     .collect();
+        let encoded_hexstr = string_to_hexstr(&encoded_bytes);
+        // String::from_iter::<Vec<char>>(encoded_hex_chars.into_iter().flatten().collect());
         // let line_hexstr = string_to_hexstr(line);
         // let line_key_hexstr = string_to_hexstr(&line_key);
         println!("String Length: {:?}\n {:?}", line.len(), line);
@@ -39,7 +39,7 @@ fn main() {
     let answer_path = Path::new("5_ans.txt");
     let answer_hexstr = read_from_file(answer_path);
     for line in answer_hexstr.lines() {
-        println!("Answer:\n {:?}", line);
+        println!("Answer Len: {:?}\nAnswer:\n {:?}", line.len(), line);
     }
 }
 
@@ -54,9 +54,10 @@ fn repeating_xor_encode(line: &str, line_key: &String) -> Vec<u8> {
     encoded_bytes
 }
 
-fn string_to_hexstr(string: &str) -> String {
+fn string_to_hexstr(string: &[u8]) -> String {
     let mut hex_bytes: Vec<char> = Vec::new();
-    for byte in string.as_bytes() {
+    // for byte in string.as_bytes() {
+    for byte in string {
         hex_bytes.push(from_u8_to_hexstr(*byte).0);
         hex_bytes.push(from_u8_to_hexstr(*byte).1);
     }
