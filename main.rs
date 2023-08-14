@@ -12,29 +12,36 @@ fn main() {
 
     challenge1_4();
 
-    let path = Path::new("5.txt");
-    let plain_strings = read_from_file(path);
+    challenge1_5();
+}
+
+fn challenge1_5() {
+    let plain_strings =
+        "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal";
     let key = "ICE";
-    for line in plain_strings.lines() {
-        let repeating_key = repeating_xor_key(key, line);
+    let repeating_key = repeating_xor_key(key, plain_strings);
 
-        // convert to bytes and then xor the line and line_key bytes.
-        let encoded_bytes: Vec<u8> = repeating_xor_encode(line, &repeating_key);
+    // convert to bytes and then xor the line and line_key bytes.
+    let encoded_bytes: Vec<u8> = repeating_xor_encode(plain_strings, &repeating_key);
 
-        let encoded_hexstr = u8slice_to_hexstr(&encoded_bytes);
+    let encoded_hexstr = u8slice_to_hexstr(&encoded_bytes);
 
-        println!("String Length: {:?}\n {:?}", line.len(), line);
-        println!(
-            "Key Length: {:?}\n {:?}",
-            repeating_key.len(),
-            repeating_key
-        );
-        println!(
-            "Hex Str Length: {:?}\n {:?}",
-            encoded_hexstr.len(),
-            encoded_hexstr
-        );
-    }
+    println!(
+        "String Length: {:?}\n {:?}",
+        plain_strings.len(),
+        plain_strings
+    );
+    println!(
+        "Key Length: {:?}\n {:?}",
+        repeating_key.len(),
+        repeating_key
+    );
+    println!(
+        "Hex Str Length: {:?}\n {:?}",
+        encoded_hexstr.len(),
+        encoded_hexstr
+    );
+    // }
     let answer_path = Path::new("5_ans.txt");
     let answer_hexstr = read_from_file(answer_path);
     for line in answer_hexstr.lines() {
