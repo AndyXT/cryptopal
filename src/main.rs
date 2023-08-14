@@ -26,27 +26,20 @@ fn challenge1_5() {
 
     let encoded_hexstr = u8slice_to_hexstr(&encoded_bytes);
 
+    println!("Set 1 Challenge 5:");
+
     println!(
-        "String Length: {:?}\n {:?}",
-        plain_strings.len(),
-        plain_strings
-    );
-    println!(
-        "Key Length: {:?}\n {:?}",
-        repeating_key.len(),
-        repeating_key
-    );
-    println!(
-        "Hex Str Length: {:?}\n {:?}",
+        "\tHex Str Length: {:?}\n\t{:?}",
         encoded_hexstr.len(),
         encoded_hexstr
     );
     // }
-    let answer_path = Path::new("5_ans.txt");
-    let answer_hexstr = read_from_file(answer_path);
-    for line in answer_hexstr.lines() {
-        println!("Answer Len: {:?}\nAnswer:\n {:?}", line.len(), line);
-    }
+    let answer_hexstr = "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f";
+    println!(
+        "\tAnswer Len: {:?}\n\tAnswer:\n\t{:?}",
+        answer_hexstr.len(),
+        answer_hexstr
+    );
 }
 
 fn repeating_xor_encode(line: &str, repeating_key: &str) -> Vec<u8> {
@@ -102,8 +95,9 @@ fn challenge1_4() {
         }
     }
 
+    println!("Set 1 Challenge 4:");
     println!(
-        "{:?}",
+        "\t{:?}",
         String::from_iter::<Vec<char>>(decoded_string_bytes.iter().map(|&x| x as char).collect())
     )
 }
@@ -128,10 +122,10 @@ fn read_from_file(path: &Path) -> String {
 
 fn challenge1_3() {
     let encoded_str = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
-    let (decoded_bytes, score) = decode_xor_string(encoded_str);
+    let (decoded_bytes, _) = decode_xor_string(encoded_str);
+    println!("Set 1 Challenge 3:");
     println!(
-        "score: {:?}\n{:?}",
-        score,
+        "\t{:?}",
         String::from_iter::<Vec<char>>(decoded_bytes.iter().map(|&x| x as char).collect())
     );
 }
@@ -191,8 +185,9 @@ fn challenge1_2() {
 
     let fixed_xor_str = xor_hex_strings(hex1, hex2);
 
-    println!("Result: {:?}", fixed_xor_str);
-    println!("Answer: {:?}", "746865206b696420646f6e277420706c6179")
+    println!("Set 1 Challenge 2:");
+    println!("\tResult: {:?}", fixed_xor_str);
+    println!("\tAnswer: {:?}", "746865206b696420646f6e277420706c6179")
 }
 
 fn xor_hex_strings(hex1: &str, hex2: &str) -> String {
@@ -219,8 +214,9 @@ fn challenge1_1() {
     let b64 = "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t";
 
     let b64_str = hex_to_b64(hex);
-    println!("Result: {:?}", b64_str);
-    println!("Answer: {:?}", b64);
+    println!("Set 1 Challenge 1:");
+    println!("\tResult: {:?}", b64_str);
+    println!("\tAnswer: {:?}", b64);
 }
 
 fn hex_to_b64(hex: &str) -> String {
