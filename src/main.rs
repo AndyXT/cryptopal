@@ -131,11 +131,11 @@ fn challenge1_3() {
 }
 
 fn decode_xor_string(encoded_str: &str) -> (Vec<u8>, f64) {
-    let encoded_bytes = hexstr_to_val(encoded_str);
+    let encoded_bytes = hexstr_to_u8vec(encoded_str);
 
     let (best_score, key) = get_score(&encoded_bytes);
 
-    let encoded_bytes = hexstr_to_val(encoded_str);
+    let encoded_bytes = hexstr_to_u8vec(encoded_str);
     let decoded_bytes = decode_single_xor_bytes(key, encoded_bytes);
 
     (decoded_bytes, best_score)
@@ -191,8 +191,8 @@ fn challenge1_2() {
 }
 
 fn xor_hex_strings(hex1: &str, hex2: &str) -> String {
-    let hex1_bytes = hexstr_to_val(hex1);
-    let hex2_bytes = hexstr_to_val(hex2);
+    let hex1_bytes = hexstr_to_u8vec(hex1);
+    let hex2_bytes = hexstr_to_u8vec(hex2);
 
     let fixed_xor: Vec<(char, char)> = hex1_bytes
         .iter()
@@ -227,7 +227,7 @@ fn hex_to_b64(hex: &str) -> String {
         hex_string.insert(0, '0');
     }
 
-    let hex_to_int = hexstr_to_val(&hex_string);
+    let hex_to_int = hexstr_to_u8vec(&hex_string);
 
     bytes_to_b64_str(&hex_to_int)
 }
@@ -264,7 +264,7 @@ fn bytes_to_b64_str(hex_to_int: &[u8]) -> String {
     b64_str
 }
 
-fn hexstr_to_val(hex_string: &str) -> Vec<u8> {
+fn hexstr_to_u8vec(hex_string: &str) -> Vec<u8> {
     let hex_to_int: Vec<u8> = hex_string
         .as_bytes()
         .chunks(2)
