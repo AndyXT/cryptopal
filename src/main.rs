@@ -13,6 +13,34 @@ fn main() {
     challenge1_4();
 
     challenge1_5();
+
+    let path = Path::new("6.txt");
+    let b64_str = read_from_file(path);
+    for line in b64_str.lines() {
+        let b64_line_bytes = b64str_to_bytes(line);
+        let hex_str = u8slice_to_hexstr(&b64_line_bytes);
+        println!("{:?}", &hex_str);
+    }
+
+    let str1 = "this is a test".as_bytes();
+    let str2 = "wokka wokka!!!".as_bytes();
+
+    let mut ham_dist = 0;
+    for i in 0..str1.len() {
+        ham_dist += hamming_distance(str1[i], str2[i]);
+    }
+    println!("{:?}", ham_dist);
+}
+
+fn hamming_distance(a: u8, b: u8) -> u8 {
+    let mut result: u8 = 0;
+    let mut x = a ^ b;
+
+    while x > 0 {
+        result += x & 1;
+        x >>= 1;
+    }
+    result
 }
 
 fn challenge1_5() {
@@ -229,10 +257,38 @@ fn hex_to_b64(hex: &str) -> String {
 
     let hex_to_int = hexstr_to_u8vec(&hex_string);
 
-    bytes_to_b64_str(&hex_to_int)
+    bytes_to_b64str(&hex_to_int)
 }
 
-fn bytes_to_b64_str(hex_to_int: &[u8]) -> String {
+fn b64str_to_bytes(b64str: &str) -> Vec<u8> {
+    let mut b64_values: Vec<u8> = Vec::new();
+    let mut u8_values: Vec<u8> = Vec::new();
+    b64str.as_bytes().iter().for_each(|b| {
+        let value: u8 = match b {
+            b'A'..=b'Z' => b - b'A',
+            b'a'..=b'z' => b - b'a' + 26,
+            b'0'..=b'9' => b - b'0' + 52,
+            b'+' => 62u8,
+            b'/' => 63u8,
+            b'=' => 0u8,
+            _ => panic!("AHHHHH"),
+        };
+        b64_values.push(value);
+    });
+    b64_values.chunks(4).for_each(|x| {
+        let mut value: u32 = (x[0] as u32) << 18;
+        value |= (x[1] as u32) << 12;
+        value |= (x[2] as u32) << 6;
+        value |= x[3] as u32;
+        for i in 0..3 {
+            let byte = (value >> (16 - i * 8)) & 0xFF;
+            u8_values.push(byte as u8);
+        }
+    });
+    u8_values
+}
+
+fn bytes_to_b64str(hex_to_int: &[u8]) -> String {
     const BASE64_ALPHABET: [char; 64] = [
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
         'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
