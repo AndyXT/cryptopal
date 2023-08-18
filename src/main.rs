@@ -16,6 +16,7 @@ fn main() {
 
     let path = Path::new("6.txt");
     let b64_str = read_from_file(path);
+
     for line in b64_str.lines() {
         let b64_line_bytes = b64str_to_bytes(line);
         let hex_str = u8slice_to_hexstr(&b64_line_bytes);
@@ -25,11 +26,16 @@ fn main() {
     let str1 = "this is a test".as_bytes();
     let str2 = "wokka wokka!!!".as_bytes();
 
+    let ham_dist = hamming_dist_of_bytes(str1, str2);
+    println!("{:?}", ham_dist);
+}
+
+fn hamming_dist_of_bytes(str1: &[u8], str2: &[u8]) -> u8 {
     let mut ham_dist = 0;
     for i in 0..str1.len() {
         ham_dist += hamming_distance(str1[i], str2[i]);
     }
-    println!("{:?}", ham_dist);
+    ham_dist
 }
 
 fn hamming_distance(a: u8, b: u8) -> u8 {
